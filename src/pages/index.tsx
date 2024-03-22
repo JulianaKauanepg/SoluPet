@@ -24,7 +24,7 @@ import Image from 'next/image'
           <StackEx/>
          </Box>
          <Box w='full' h='500px'> 
-         <Image src="/img/fundo.png" alt="logo" width={1000}  height={250}/> 
+         <Image src="/img/fundoA.png" alt="logo" width={10000}  height={250}/> 
          </Box>
        </Stack>
 

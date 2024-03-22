@@ -10,10 +10,54 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
+
 
 
 
 const CadastroPage = () => {
+
+  const [formDados, setFormDados]  = useState({
+    nome: '',
+    cpf: '',
+    rg: '',
+    data_nasc: '',
+    celular: '',
+    fone: '',
+    email: '',
+    cnpj: '',
+    endereco: '',
+    bairro: '',
+    cep: '',
+    municipio: '',
+    estado: '',
+    password: ''
+  })
+
+  const handleFormEdit = (event, nome) => {
+    setFormDados({
+      ...formDados,
+      [nome]: event.target.value
+    })
+  }
+  
+  const handleForm = async (event) => {
+    try {
+      event.preventDefault()
+      console.log(formDados)
+      const response = await fetch(`/api/cadastro`, {
+        method: 'POST',
+        body: JSON.stringify(formDados)
+      })
+      
+      const json = await response.json()
+      console.log(response.status);
+      console.log(json);
+  
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <Flex 
@@ -41,7 +85,7 @@ const CadastroPage = () => {
         </Heading>
 
         <Box>
-          <form  autoComplete='off'>
+        <form onSubmit={handleForm} autoComplete='off'>
             <FormControl isRequired marginTop={'15px'}>
               <FormLabel color={'gray.200'}>Nome</FormLabel>
               <Input
@@ -53,11 +97,12 @@ const CadastroPage = () => {
                focusBorderColor='gray.500'
                color='gray.200'
                placeholder='Insira seu nome'
-              
+               value={formDados.nome} 
+               onChange={(e) => handleFormEdit(e, 'nome')}
                />
             </FormControl>
             <Flex justify={'space-between'}>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl  marginTop={'15px'} width='49%'>
               <FormLabel color={'gray.200'}>CPF</FormLabel>
               <Input 
                 type='text'
@@ -68,10 +113,10 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira seu CPF' 
-                
+                onChange={(e) => handleFormEdit(e, 'cpf')}
               />
             </FormControl>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl  marginTop={'15px'} width='49%'>
             <FormLabel color={'gray.200'}>RG</FormLabel>
               <Input 
                 type='text'
@@ -82,11 +127,11 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200' 
                 placeholder='Insira seu RG'
-                
+                onChange={(e) => handleFormEdit(e, 'rg')}
               />
             </FormControl>
             </Flex>
-            <FormControl isRequired marginTop={'15px'}>
+            <FormControl  marginTop={'15px'}>
             <FormLabel color={'gray.200'}>Data de Nascimento</FormLabel>
               <Input 
                 type='date'
@@ -96,11 +141,11 @@ const CadastroPage = () => {
                 backgroundColor='gray.900'
                 focusBorderColor='gray.500'
                 color='gray.200' 
-               
+                onChange={(e) => handleFormEdit(e, 'data_nasc')}
               />
             </FormControl>
             <Flex justify={'space-between'}>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl  marginTop={'15px'} width='49%'>
             <FormLabel color={'gray.200'}>Celular</FormLabel>
               <Input 
                 type='text'
@@ -111,7 +156,7 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira seu contato' 
-               
+                onChange={(e) => handleFormEdit(e, 'celular')}
               />
             </FormControl>
             <FormControl marginTop={'15px'} width='49%'>
@@ -125,7 +170,7 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira seu telefone' 
-                
+                onChange={(e) => handleFormEdit(e, 'fone')}
               />
             </FormControl>
             </Flex>
@@ -140,10 +185,10 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira seu e-mail'
-               
+                onChange={(e) => handleFormEdit(e, 'email')}
               />
             </FormControl>
-            <FormControl isRequired marginTop={'15px'}>
+            <FormControl  marginTop={'15px'}>
             <FormLabel color={'gray.200'}>CNPJ</FormLabel>
               <Input 
                 type='text'
@@ -154,10 +199,10 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira o CNPJ' 
-                
+                onChange={(e) => handleFormEdit(e, 'cnpj')}
               />
             </FormControl>
-            <FormControl isRequired marginTop={'15px'}>
+            <FormControl  marginTop={'15px'}>
             <FormLabel color={'gray.200'}>Endereço da Clínica</FormLabel>
               <Input 
                 type='text'
@@ -167,12 +212,13 @@ const CadastroPage = () => {
                 backgroundColor='gray.900'
                 focusBorderColor='gray.500'
                 color='gray.200'
-                placeholder='Insira o endereço' 
+                placeholder='Insira o endereço'
+                onChange={(e) => handleFormEdit(e, 'endereco')} 
                
               />
             </FormControl>
             <Flex justify={'space-between'}>
-            <FormControl isRequired marginTop={'15px'} width={'49%'}>
+            <FormControl  marginTop={'15px'} width={'49%'}>
             <FormLabel color={'gray.200'}>Bairro</FormLabel>
               <Input 
                 type='text'
@@ -183,10 +229,11 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira o bairro' 
+                onChange={(e) => handleFormEdit(e, 'bairro')}
                 
               />
             </FormControl>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl  marginTop={'15px'} width='49%'>
             <FormLabel color={'gray.200'}>CEP</FormLabel>
               <Input 
                 type='text'
@@ -197,12 +244,13 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira o CEP' 
+                onChange={(e) => handleFormEdit(e, 'cep')}
                 
               />
                </FormControl>
                </Flex>
             <Flex justify={'space-between'}>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl  marginTop={'15px'} width='49%'>
             <FormLabel color={'gray.200'}>Município</FormLabel>
               <Input 
                 type='text'
@@ -213,10 +261,11 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira o municipio' 
+                onChange={(e) => handleFormEdit(e, 'municipio')}
                
               />
             </FormControl>
-            <FormControl isRequired marginTop={'15px'} width='49%'>
+            <FormControl marginTop={'15px'} width='49%'>
             <FormLabel color={'gray.200'}>Estado</FormLabel>
               <Input 
                 type='text'
@@ -227,6 +276,7 @@ const CadastroPage = () => {
                 focusBorderColor='gray.500'
                 color='gray.200'
                 placeholder='Insira o estado' 
+                onChange={(e) => handleFormEdit(e, 'estado')}
                
               />
             </FormControl>
@@ -241,7 +291,8 @@ const CadastroPage = () => {
                 backgroundColor='gray.900'
                 focusBorderColor='gray.500'
                 color='gray.200'
-                placeholder='Crie uma senha' 
+                placeholder='Crie uma senha'
+                onChange={(e) => handleFormEdit(e, 'senha')} 
                
               />
             </FormControl>
